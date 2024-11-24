@@ -9,13 +9,16 @@ document
 
 function callApi(e) {
   e.preventDefault();
+  if (!apiKey) {
+    throw new Error("ApiKey not found.");
+  }
   const location = document.querySelector(".search-bar").value;
   if (!location) {
     return;
   }
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${apiKey}`;
 
-  fetch(url)
+  fetch(url, { mode: "cors" })
     .then((reponse) => {
       if (reponse.ok) {
         return reponse.json();
