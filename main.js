@@ -19,23 +19,26 @@ function callApi(e) {
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${apiKey}`;
 
   fetch(url, { mode: "cors" })
-    .then((reponse) => {
-      if (reponse.ok) {
-        return reponse.json();
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
       } else {
         throw new Error("Network response error.");
       }
     })
-    .catch((error) => {
-      console.log(error);
-    })
     .then((data) => {
       console.log(data);
       render(data);
+    })
+    .catch((error) => {
+      console.log(error);
     });
 }
 
 function render(data) {
+  if (document.getElementById("content").children) {
+    document.getElementById("content").replaceChildren();
+  }
   for (let i = 0; i < 7; i++) {
     const day = data.days[i];
     const element = document.createElement("div");
